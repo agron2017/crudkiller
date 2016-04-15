@@ -18,7 +18,7 @@
     },
     "autoload": {
         "psr-4": {
-            "bribrink\\crudkiller\\": "/","bribrink\\formkiller\\": "/","bribrink\\tables\\": "/"
+            "bribrink\\crudkiller\\": "/","bribrink\crudkiller\formkiller\\": "/","bribrink\crudkiller\tables\\": "/"
         }
     }
 }
