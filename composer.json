@@ -1,0 +1,24 @@
+{
+    "name": "bribrink/crudkiller",
+    "type": "crud",
+    "description": "Simple Crud Generator",
+    "keywords": ["crud"],
+    "homepage": "https://github.com/bribrink/crudkiller",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Brian Brinkerhoff",
+            "email": "bribrink@gmail.com",
+            "homepage": ""
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "ext-gd": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "bribrink\\crudkiller\\": "/","bribrink\\formkiller\\": "/","bribrink\\table\\": "/"
+        }
+    }
+}
