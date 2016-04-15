@@ -18,7 +18,8 @@
     },
     "autoload": {
         "psr-4": {
-            "bribrink\\crudkiller\\": "/"
+            "Bribrink\\Crudkiller\\": "/"
+
         }
     }
 }
