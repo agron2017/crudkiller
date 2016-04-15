@@ -127,9 +127,7 @@ class Formkiller
                 $t.= '';
             }
             else if( strpos($colname,'_type') ){
-                $tbl = str_replace('_type','',$colname);
-                $tbl = lcfirst($tbl);
-                $t.=Fields::selectgen($colname, $col->label, $tbl, true, $value   );
+                $t.=Fields::selectgen($colname, $col->label, $colname, true, $value   );
             } else if( strpos($colname,'users') ){
                 $t .= '';
             }
