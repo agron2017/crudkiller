@@ -7,6 +7,8 @@
  * Time: 11:18 AM
  */
 
+namespace Bribrink\crudkiller;
+
 class Crudkiller3
 {
     private $table;

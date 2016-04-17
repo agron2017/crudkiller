@@ -95,7 +95,7 @@ echo "Beginning..";
 
 
        foreach($ownedby as $k=>$v) {
-           $text = '<?php '.PHP_EOL;
+           $text = '<?php '.PHP_EOL.'namespace Bribrink\Crudkiller\crudkiller;';
            $tmp1 = ' '.PHP_EOL;
 
            //create the classes
