@@ -93,8 +93,6 @@ echo "Beginning..";
 
 
 
-
-
        foreach($ownedby as $k=>$v) {
            $text = '<?php '.PHP_EOL.'namespace Bribrink\Crudkiller\crudkiller;'.PHP_EOL;
            $tmp1 = ' '.PHP_EOL;
@@ -102,6 +100,9 @@ echo "Beginning..";
            //create the classes
            $text .= 'class '.ucfirst($k).'killer {  '.PHP_EOL.PHP_EOL;
 
+           echo $k;
+
+           print_r($tablefields[$k] );
 
            foreach($v as $p):
            $text .= '
@@ -175,18 +176,11 @@ echo "Beginning..";
        }
 
 
-
         //table class logic
         foreach($tablefields as $f=>$v ){
-
-
-
-
-
             $classname = str_replace( '_','', ucfirst($f) ).'table';
             $text = '';
             $text_construct_vars = '';
-            $functiontext = '';
             $text .= '<?php '.PHP_EOL;
             $text .= '
                    class '.$classname.' { '.PHP_EOL;
@@ -194,74 +188,21 @@ echo "Beginning..";
             foreach($v as $n=>$t){
 
                 $text .= '
-                        public $'.$n.'; '.PHP_EOL;
+                        public $'.$n.';
+                        ';
 
                 $text_construct_vars .= '
-                        $this->'.$n.' = (object)[\'name\'=>\''.$n.'\',\'type\'=>\''.$t->type.'\', \'label\' => \'".$t->label."\' ]; ';
+                        $this->'.$n.' = (object)[\'name\'=>\''.$n.'\',\'type\'=>\''.$t->type.'\', \'label\' => \''.$t->label.'\' ];
+                        ';
             }
             $text .= PHP_EOL;
 
-
-            if(isset($ownedby[$f])){
-
-                foreach($ownedby[$f] as $p):
-                $text .= '
-                        public $'.$p.' = \''.$p.'\';  '.PHP_EOL;
-                $tmp1 .= '                       $this->'.$p.' = self::get( \''.$p.'\', $id );   '.PHP_EOL;
-
-                endforeach;
-
-                $text .= '
-                        public $myself;'.PHP_EOL.PHP_EOL;
-
-                $functiontext = '
-                private static function get($tbl,$id=null){
-                    $sql = " SELECT * FROM $tbl ";
-                    if(!is_null($id)){
-                        $sql .= "  WHERE '.$keysign1.$k.$keysign2.' = ".$id;
-                    }
-                    return self::connect($sql);
-                }'.PHP_EOL.'
-
-                private static function getme($id=null){
-                    $sql = " SELECT * FROM '.$k.' WHERE id = ".$id;
-                    $pdo = DatabaseFactory::getFactory()->getConnection();
-                    $query = $pdo->prepare($sql);
-                    $query->execute();
-                    return $query->fetchObject();
-                }'.PHP_EOL.'
-
-                 private static function all($id=null){
-                    $sql = " SELECT * FROM '.$k.' ";
-                    return self::connect($sql);
-                }'.PHP_EOL.'
-
-                private static function connect($sql){
-                    $pdo = DatabaseFactory::getFactory()->getConnection();
-                    $query = $pdo->prepare($sql);
-                    $query->execute();
-                    return $query->fetchAll();
-                }'.PHP_EOL;
-
-            }
-
-
-
             $text .= '
-                   public function __construct($id=null) { '.PHP_EOL;
+                   public function __construct() { '.PHP_EOL;
                 $text .= $text_construct_vars;
-                $text .= PHP_EOL.$tmp1.PHP_EOL;
+            $text .= ' } '.PHP_EOL;
 
-                $text .= '               $vals = self::getme($id);
-                       foreach($vals as $k=>$v){
-                           $this->$k = $v;
-                       }'.PHP_EOL.PHP_EOL;
-
-            $text .= '} '.PHP_EOL;
-
-            $text .= $functiontext;
-
-            $text .= PHP_EOL.'} '.PHP_EOL.PHP_EOL;
+            $text .= '             } '.PHP_EOL.PHP_EOL;
 
 
 
@@ -284,7 +225,7 @@ echo "Beginning..";
 
 
 
-
+print_r($tablefields);
 
 
 
