@@ -187,7 +187,7 @@ foreach($tablefields as $f=>$v ){
     $text = '';
     $text_construct_vars = '';
     $functiontext = '';
-    $text .= '<?php '.PHP_EOL.'namespace Bribrink\Crudkiller\table;'.PHP_EOL;;
+    $text .= '<?php '.PHP_EOL.'namespace Bribrink\Crudkiller\tables;'.PHP_EOL;;
     $text .= '
                    class '.$classname.' { '.PHP_EOL;
 
