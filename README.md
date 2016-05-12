@@ -15,3 +15,7 @@ Form dropdown lists will be generated from the "type" tables.
 default bootstrap 3 (although i want to create a metroui version)
 
 Not ready for public use. 
+
+Installation
+
+composer require bribrink/crudkiller
