@@ -187,7 +187,7 @@ echo "Beginning..";
             $text = '';
             $text_construct_vars = '';
             $functiontext = '';
-            $text .= '<?php '.PHP_EOL;
+            $text .= '<?php '.PHP_EOL.'namespace Bribrink\Crudkiller\table;'.PHP_EOL;;
             $text .= '
                    class '.$classname.' { '.PHP_EOL;
 
@@ -197,7 +197,7 @@ echo "Beginning..";
                         public $'.$n.'; '.PHP_EOL;
 
                 $text_construct_vars .= '
-                        $this->'.$n.' = (object)[\'name\'=>\''.$n.'\',\'type\'=>\''.$t->type.'\', \'label\' => \'".$t->label."\' ]; ';
+                        $this->'.$n.'[\'field\'] = (object)[\'name\'=>\''.$n.'\',\'type\'=>\''.$t->type.'\', \'label\' => \'".$t->label."\' ]; ';
             }
             $text .= PHP_EOL;
 
@@ -212,10 +212,11 @@ echo "Beginning..";
                 endforeach;
 
                 $text .= '
-                        public $myself;'.PHP_EOL.PHP_EOL;
+                        public $myself;'.PHP_EOL.PHP_EOL.
+                        'private $con';
 
                 $functiontext = '
-                private static function get($tbl,$id=null){
+                private  function get($tbl,$id=null){
                     $sql = " SELECT * FROM $tbl ";
                     if(!is_null($id)){
                         $sql .= "  WHERE '.$keysign1.$k.$keysign2.' = ".$id;
@@ -223,22 +224,20 @@ echo "Beginning..";
                     return self::connect($sql);
                 }'.PHP_EOL.'
 
-                private static function getme($id=null){
+                private  function getme($id=null){
                     $sql = " SELECT * FROM '.$k.' WHERE id = ".$id;
-                    $pdo = DatabaseFactory::getFactory()->getConnection();
-                    $query = $pdo->prepare($sql);
+                    $query = $this->pdo->prepare($sql);
                     $query->execute();
                     return $query->fetchObject();
                 }'.PHP_EOL.'
 
-                 private static function all($id=null){
+                 private  function all($id=null){
                     $sql = " SELECT * FROM '.$k.' ";
                     return self::connect($sql);
                 }'.PHP_EOL.'
 
                 private static function connect($sql){
-                    $pdo = DatabaseFactory::getFactory()->getConnection();
-                    $query = $pdo->prepare($sql);
+                    $query = $this->pdo->prepare($sql);
                     $query->execute();
                     return $query->fetchAll();
                 }'.PHP_EOL;
