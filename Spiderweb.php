@@ -216,6 +216,18 @@ foreach($tablefields as $f=>$v ){
 
         $functiontext = '
 
+                public static function con(){
+                $user    = \'root\';
+                $pass    = \'\';
+                $host    = \'localhost\';
+                $db      = \'tracker\';
+                $charset = \'utf8\';
+
+                $pdo = new \PDO("mysql:host=$host;dbname=$db;charset=$charset", $user, $pass);
+
+                return $pdo
+                }
+
 
                 private  function get($tbl,$id=null){
                     $sql = " SELECT * FROM $tbl ";
@@ -228,7 +240,7 @@ foreach($tablefields as $f=>$v ){
 
                 private  function getme($id=null){
                     $sql = " SELECT * FROM '.$k.' WHERE id = ".$id;
-                    $query = $this->pdo->prepare($sql);
+                    $query = self::con()->prepare($sql);->prepare($sql);
                     $query->execute();
                     return $query->fetchObject();
                 }
