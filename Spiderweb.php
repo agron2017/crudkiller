@@ -196,8 +196,8 @@ foreach($tablefields as $f=>$v ){
         $text .= '
                         public $'.$n.'; '.PHP_EOL;
 
-        $text_construct_vars .= '
-                        $this->'.$n.'[\'field\'] = (object)[\'name\'=>\''.$n.'\',\'type\'=>\''.$t->type.'\', \'label\' => \'".$t->label."\' ]; ';
+        $text_construct_vars .= '';
+                        //$this->'.$n.'[\'field\'] = (object)[\'name\'=>\''.$n.'\',\'type\'=>\''.$t->type.'\', \'label\' => \'".$t->label."\' ]; ';
     }
     $text .= PHP_EOL;
 
@@ -205,14 +205,11 @@ foreach($tablefields as $f=>$v ){
     if(isset($ownedby[$f])){
 
         foreach($ownedby[$f] as $p):
-            $text .= '
-                        public $'.$p.' = \''.$p.'\';  '.PHP_EOL;
-            $tmp1 .= '                       $this->'.$p.' = self::get( \''.$p.'\', $id );   '.PHP_EOL;
-
+            $text .= 'public $'.$p.' = \''.$p.'\';  '.PHP_EOL;
+            $tmp1 .= '$this->'.$p.' = self::get( \''.$p.'\', $id );   '.PHP_EOL;
         endforeach;
 
-        $text .= '
-                        public $myself;';
+        $text .= 'public $myself;';
 
         $functiontext = '
 
@@ -232,14 +229,14 @@ foreach($tablefields as $f=>$v ){
                 private  function get($tbl,$id=null){
                     $sql = " SELECT * FROM $tbl ";
                     if(!is_null($id)){
-                        $sql .= "  WHERE '.$keysign1.$k.$keysign2.' = ".$id;
+                        $sql .= "  WHERE '.$keysign1.$f.$keysign2.' = ".$id;
                     }
                     return self::connect($sql);
                 }
 
 
                 private  function getme($id=null){
-                    $sql = " SELECT * FROM '.$k.' WHERE id = ".$id;
+                    $sql = " SELECT * FROM '.$f.' WHERE id = ".$id;
                     $query = self::con()->prepare($sql);
                     $query->execute();
                     return $query->fetchObject();
@@ -247,7 +244,7 @@ foreach($tablefields as $f=>$v ){
 
 
                  private  function all($id=null){
-                    $sql = " SELECT * FROM '.$k.' ";
+                    $sql = " SELECT * FROM '.$f.' ";
                     return self::connect($sql);
                 }
 
