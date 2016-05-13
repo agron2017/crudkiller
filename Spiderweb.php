@@ -225,7 +225,7 @@ foreach($tablefields as $f=>$v ){
 
                 $pdo = new \PDO("mysql:host=$host;dbname=$db;charset=$charset", $user, $pass);
 
-                return $pdo
+                return $pdo;
                 }
 
 
@@ -240,7 +240,7 @@ foreach($tablefields as $f=>$v ){
 
                 private  function getme($id=null){
                     $sql = " SELECT * FROM '.$k.' WHERE id = ".$id;
-                    $query = self::con()->prepare($sql);->prepare($sql);
+                    $query = self::con()->prepare($sql);
                     $query->execute();
                     return $query->fetchObject();
                 }
